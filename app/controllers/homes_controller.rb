@@ -13,10 +13,12 @@ class HomesController < ApplicationController
   # GET /homes/new
   def new
     @home = Home.new
+    2.times{ @home.stations.build }
   end
 
   # GET /homes/1/edit
   def edit
+    @home.stations.build
   end
 
   # POST /homes or /homes.json
@@ -64,6 +66,7 @@ class HomesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def home_params
-      params.require(:home).permit(:home_name, :price, :address, :old, :comment)
+      params.require(:home).permit(:home_name, :price, :address, :old, :comment,
+        stations_attributes: %w[train_name station_name on_foot])
     end
 end
